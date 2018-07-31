@@ -1,0 +1,97 @@
+apply plugin: 'com.android.application'
+apply plugin: 'maven-publish'
+apply plugin: 'idea'
+
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion '27.0.3'
+    defaultConfig {
+        applicationId "com.android.appiumtest"
+        minSdkVersion 24
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    testImplementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'com.android.support:appcompat-v7:24.2.1'
+    implementation 'com.android.support:design:24.2.1'
+    testImplementation 'junit:junit:4.12'
+    testImplementation files('libs/cglib-nodep-3.2.4.jar')
+    testImplementation files('libs/commons-codec-1.10.jar')
+    testImplementation files('libs/commons-exec-1.3.jar')
+    testImplementation files('libs/commons-io-2.5.jar')
+    testImplementation files('libs/commons-lang3-3.4.jar')
+    testImplementation files('libs/commons-logging-1.2.jar')
+    testImplementation files('libs/cssparser-0.9.20.jar')
+    testImplementation files('libs/gson-2.3.1.jar')
+    testImplementation files('libs/guava-19.0.jar')
+    testImplementation files('libs/hamcrest-core-1.3.jar')
+    testImplementation files('libs/hamcrest-library-1.3.jar')
+    testImplementation files('libs/htmlunit-2.23.jar')
+    testImplementation files('libs/htmlunit-core-js-2.23.jar')
+    testImplementation files('libs/httpclient-4.5.2.jar')
+    testImplementation files('libs/httpcore-4.4.4.jar')
+    testImplementation files('libs/httpmime-4.5.2.jar')
+    testImplementation files('libs/javax.servlet-api-3.1.0.jar')
+    testImplementation files('libs/jetty-io-9.2.13.v20150730.jar')
+    testImplementation files('libs/jetty-util-9.2.13.v20150730.jar')
+    testImplementation files('libs/jna-4.1.0.jar')
+    testImplementation files('libs/jna-platform-4.1.0.jar')
+    testImplementation files('libs/junit-4.12.jar')
+    testImplementation files('libs/neko-htmlunit-2.23.jar')
+    testImplementation files('libs/netty-3.5.7.Final.jar')
+    testImplementation files('libs/phantomjsdriver-1.3.0.jar')
+    testImplementation files('libs/sac-1.3.jar')
+    testImplementation group: 'net.java.dev.jna', name: 'jna', version: '4.2.2'
+    testImplementation group: 'uk.co.caprica', name: 'vlcj', version: '3.10.1'
+    testImplementation group: 'io.appium', name: 'java-client', version: '6.1.0'
+    testImplementation group: 'org.testng', name: 'testng', version: '6.10'
+    testImplementation group: 'org.uncommons', name: 'reportng', version: '1.1.4'
+    testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-chrome-driver', version: '3.11.0'
+    testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: '3.11.0'
+    testImplementation 'com.google.cloud:google-cloud-storage:1.35.0'
+    testImplementation group: 'com.github.lalyos', name: 'jfiglet', version: '0.0.8'
+    testImplementation 'com.google.cloud:google-cloud-speech:0.53.0-alpha'
+    testImplementation 'com.hotwire.image-assert:image-assert:1.0.5'
+    testImplementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.11.0'
+    testImplementation group: 'de.dfki.mary', name: 'voice-cmu-slt-hsmm', version: '5.2'
+    testImplementation 'io.github.prashant-ramcharan:courgette-jvm:2.4.0'
+    testImplementation 'io.github.prashant-ramcharan:webdriver-binary-downloader:1.2.2'
+    testImplementation group: 'com.jayway.restassured', name: 'rest-assured', version: '2.9.0'
+    testImplementation group: 'com.jayway.restassured', name: 'json-schema-validator', version: '2.2.0'
+    testImplementation files('libs/serializer-2.7.2.jar')
+    testImplementation files('libs/websocket-api-9.2.15.v20160210.jar')
+    testImplementation files('libs/websocket-client-9.2.15.v20160210.jar')
+    testImplementation files('libs/websocket-common-9.2.15.v20160210.jar')
+}
+
+
+tasks.withType(Test) {
+    systemProperties = System.getProperties()
+}
+
+
+/* JUnit Specific Tasks
+----------------------------------------------------
+*/
+task runAndroid8InchTestSuite(type: Test) {
+    systemProperty("browser", "chrome")
+
+    include '**/suites/Android8InchTestSuite.class'
+    outputs.upToDateWhen { false }
+}
